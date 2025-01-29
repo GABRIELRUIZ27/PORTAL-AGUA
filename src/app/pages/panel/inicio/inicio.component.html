@@ -1,0 +1,452 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Columna izquierda -->
+    <!-- <div class="col-md-4">
+      <div
+      class="card d-flex flex-column shadow-lg animate__animated animate__fadeInDown"
+      style="padding: 30px; margin-bottom: 24px; height: 100%; border-radius: 12px; background-color: #ffffff;"
+    >
+      <div class="row mb-4">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+          <img
+            src="../../../../assets/images/logo-ape.png"
+            alt="Logo APE"
+            style="width: 120px; height: auto;"
+          />
+        </div>
+      </div>
+    
+      <div class="row text-center">
+        <div class="col-12">
+          <div class="card-body">
+            <h1
+              class="card-title fw-bold fs-2 text-primary mb-3"
+              style="letter-spacing: 0.5px;"
+            >
+              Bienvenido al Sistema de Pago de Agua Potable
+            </h1>
+            <h1 class="text-muted fs-5 mb-4" style="line-height: 1.5;">
+              Este portal, desarrollado por el Ayuntamiento Municipal, está
+              diseñado para ofrecerte acceso sencillo a la información de tu
+              cuenta y permitirte realizar consultas o pagos desde cualquier lugar.
+              ¡Gracias por usar este servicio!
+            </h1>
+    
+            <div class="text-start">
+              <ul class="list-group">
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="ti ti-check text-success me-2"></i> Consulta rápida y segura de tu cuenta.
+                </li>
+                <li class="list-group-item d-flex align-items-center">
+                  <i class="ti ti-check text-success me-2"></i> Pagos disponibles desde cualquier lugar.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    </div> -->
+
+    <!-- Columna derecha -->
+    <div class="col-md-12">
+      <!-- Cards de búsqueda -->
+      <div *ngIf="!agua" id="cardsBusqueda">
+        <!-- Card de búsqueda por número de contrato -->
+        <div class="card mt-4">
+          <div class="card-header text-white" style="background-color: #3c1d63;">
+            <h5 class="card-title mb-0">Búsqueda por Número de Contrato</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="contrato" class="form-label">Número de Contrato:</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <!-- Ícono para el campo de contrato -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 6h13"></path>
+                    <path d="M8 12h13"></path>
+                    <path d="M8 18h13"></path>
+                    <path d="M5 6h.01"></path>
+                    <path d="M5 12h.01"></path>
+                    <path d="M5 18h.01"></path>
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  id="contrato"
+                  [(ngModel)]="contrato"
+                  class="form-control"
+                  placeholder="Ingresa el número de contrato"
+                />
+                <button (click)="buscarContrato()" class="btn btn-success">
+                  <!-- Ícono de búsqueda -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  Buscar
+                </button>
+              </div>
+            </div>
+        
+            <!-- Resultado de la búsqueda -->
+            <div *ngIf="agua" class="mt-3">
+              <div class="input-group">
+                <div class="form-control bg-light">
+                  Información del contrato encontrada: <strong>{{ agua.contrato }}</strong>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Alerta de error -->
+            <div *ngIf="showErrorAlertContrato" class="alert alert-danger mt-3" role="alert">
+              <div class="d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                  <path d="M12 8v4"></path>
+                  <path d="M12 16h.01"></path>
+                </svg>
+                <div>
+                  No se encontró información con este número de contrato.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        <!-- Card de búsqueda por nombre -->
+        <div class="card mt-4">
+          <div class="card-header text-white" style="background-color: #3c1d63;">
+            <h5 class="card-title mb-0">Búsqueda por Nombre</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre Completo:</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <!-- Ícono para el campo de nombre -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  id="nombre"
+                  [(ngModel)]="nombre"
+                  class="form-control"
+                  placeholder="Ingresa el nombre completo"
+                />
+                <button (click)="buscarContratoPorNombre()" class="btn btn-success">
+                  <!-- Ícono de búsqueda -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  Buscar
+                </button>
+              </div>
+            </div>
+        
+            <!-- Resultado de la búsqueda -->
+            <div *ngIf="numeroContrato" class="mt-3">
+              <div class="input-group">
+                <div class="form-control bg-light">
+                  Número de contrato encontrado: <strong>{{ numeroContrato }}</strong>
+                </div>
+                <button (click)="copiarContrato()" class="btn btn-primary">
+                  <!-- Ícono de copiar -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  Copiar
+                </button>
+              </div>
+              <!-- Alerta de copiado -->
+              <div *ngIf="showAlert" class="alert alert-success mt-3" role="alert">
+                <div class="d-flex align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                    <path d="M5 12l5 5l10 -10"></path>
+                  </svg>
+                  <div>
+                    ¡Número de contrato copiado con éxito!
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Alerta de error -->
+            <div *ngIf="showErrorAlertNombre" class="alert alert-danger mt-3" role="alert">
+              <div class="d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                  <path d="M12 8v4"></path>
+                  <path d="M12 16h.01"></path>
+                </svg>
+                <div>
+                  No se encontró un número de contrato con el nombre proporcionado.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-header text-white" style="background-color: #3c1d63;">
+            <h5 class="card-title mb-0">¿Tienes alguna duda?</h5>
+          </div>
+          <div class="card-body" style="padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <label for="nombre" class="form-label">Si tienes alguna pregunta o necesitas más información, puedes enviarnos un correo electrónico y con gusto te ayudaremos.
+              </label>
+              <a
+              href="mailto:sistemasapetatitlan@gmail.com"
+              class="btn btn-purple w-100 d-flex align-items-center justify-content-center"
+              (click)="openEmail($event)"
+            >  
+              <i class="ti ti-mail"></i><span class="ms-2">Enviar correo</span>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+
+      <!-- Tabla de resultados -->
+      <div *ngIf="agua" class="card mb-4" style="margin-top: 15px;">
+        <div class="card-body" style="padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          
+          <!-- Título de la tarjeta -->
+          <h4 class="card-title text-primary fw-bold mb-4" style="font-size: 24px;">Información del Contrato</h4>
+          
+          <!-- Tabla de información del contrato -->
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">Campo</th>
+                <th scope="col" class="text-center">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Nombre</th>
+                <td>{{ agua.nombre }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Dirección</th>
+                <td>{{ agua.domicilio }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Contrato</th>
+                <td>{{ agua.contrato }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Folio</th>
+                <td>{{ agua.folio }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Comunidad</th>
+                <td>{{ agua.comunidad.nombre }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Tipo de Servicio</th>
+                <td>{{ agua.tipoServicio.nombre }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Último Período de Pago</th>
+                <td>{{ agua.periodo ? agua.periodo : 'SIN INFORMACIÓN DE PAGO' }}</td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <!-- Alerta de advertencia para revisar los datos -->
+          <div class="alert alert-warning alert-dismissible fade show" role="alert" style="border-radius: 10px; background-color: #fff3cd; border: 1px solid #ffeeba;">
+            <div class="d-flex align-items-center">
+              <!-- Ícono de advertencia -->
+              <div class="me-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon" style="color: #ffc107;">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M12 9v4"></path>
+                  <path d="M12 16h.01"></path>
+                  <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
+                </svg>
+              </div>
+              
+              <!-- Mensaje de alerta -->
+              <div>
+                <h3 class="alert-title text-warning fw-bold" style="margin-bottom: 0;">¡Atención!</h3>
+                <p class="text-secondary" style="margin-top: 0;">Por favor, revisa los datos de tu contrato antes de continuar con el pago.</p>
+              </div>
+            </div>
+            
+            <!-- Botón para cerrar la alerta -->
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      
+          <!-- Botones de acción -->
+          <div class="d-flex flex-column align-items-center gap-3">
+            <!-- reCAPTCHA -->
+            <re-captcha
+              siteKey="6LfnZ6cqAAAAANmzTOM7pvRy46kfjmkC4fSDm4kP"
+              (resolved)="onCaptchaResolved($event)"
+            ></re-captcha>
+          
+            <!-- Botón Pagar, deshabilitado si el captcha no se resuelve -->
+            <button
+              class="btn btn-success d-flex align-items-center"
+              [disabled]="!captchaResolved"
+              data-bs-toggle="modal"
+              data-bs-target="#modalPago"
+            >
+              <i class="ti ti-cash"></i><span class="ms-2">Pagar</span>
+            </button>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Botón para realizar una nueva consulta -->
+      <div *ngIf="agua" class="text-center">
+        <button
+          class="btn btn-purple w-100"
+          (click)="realizarNuevaConsulta()"
+        >
+        <i class="ti ti-droplet-search"></i><span class="ms-2">Realizar Nueva Consulta</span> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Pago -->
+<div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="modalPagoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary fw-bold" id="modalPagoLabel">
+          Pago de Agua Potable
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="resetModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Información del cliente -->
+        <div class="row mb-3">
+          <div class="col">
+            <strong>Número de Contrato:</strong> {{ agua?.contrato }}
+          </div>
+          <div class="col">
+            <strong>Nombre:</strong> {{ agua?.nombre }}
+          </div>
+          <div class="col">
+            <strong>Domicilio:</strong> {{ agua?.domicilio }}
+          </div>
+        </div>
+
+        <!-- Último período -->
+        <div class="mb-3">
+          <strong>Último Período de Pago:</strong>
+          <span class="text-danger fw-bold">
+            {{ agua?.periodo || 'SIN INFORMACIÓN DE PAGO' }}
+          </span>
+        </div>
+
+        <!-- Campo de Período de Pago -->
+        <div class="mb-3">
+          <label for="periodoPago" class="form-label">Periodo de Pago:</label>
+          <input
+            id="periodoPago"
+            class="form-control"
+            [(ngModel)]="periodoPago"
+            (input)="onPeriodoInput()"
+            placeholder="Ejemplo: Enero 2025 - Diciembre 2025"
+          />
+          <!-- Advertencia de formato de periodo -->
+          <div class="alert alert-info mt-2" role="alert" *ngIf="!errorPeriodo">
+            <div class="d-flex">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                  <path d="M12 9h.01"></path>
+                  <path d="M11 12h1v4h1"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="alert-title">Formato del Período</h4>
+                <div class="text-secondary">
+                  El período debe estar en el formato: "Mes Año - Mes Año" (Ejemplo: Enero 2025 - Diciembre 2025) y no debe saltarse meses.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error de formato de periodo -->
+          <div *ngIf="errorPeriodo" class="alert alert-danger mt-2" role="alert">
+            <div class="d-flex align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon me-2">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                <path d="M12 8v4"></path>
+                <path d="M12 16h.01"></path>
+              </svg>
+              <div>
+                {{ errorPeriodo }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input de correo electrónico -->
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo Electrónico:</label>
+          <input
+            id="correo"
+            type="email"
+            class="form-control"
+            [(ngModel)]="correo"
+            placeholder="usuario@correo.com"
+          />
+        </div>
+
+        <!-- Inputs de costos -->
+        <div class="mb-3">
+          <label for="aguaCosto" class="form-label">Costo de Agua:</label>
+          <input id="aguaCosto" class="form-control" [value]="aguaCosto" disabled />
+        </div>
+        <div class="mb-3">
+          <label for="alcantarilladoCosto" class="form-label">Costo de Alcantarillado:</label>
+          <input
+            id="alcantarilladoCosto"
+            class="form-control"
+            [value]="alcantarilladoCosto"
+            disabled
+          />
+        </div>
+        
+<!-- Recargos -->
+<div class="mb-3 recargos-section">
+  <label for="recargos" class="form-label">Recargos:</label>
+  <input id="recargos" class="form-control" [value]="recargos" disabled />
+</div>
+
+        <!-- Total -->
+        <div class="mb-3">
+          <label for="total" class="form-label">Total:</label>
+          <input id="total" class="form-control" [value]="total" disabled />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="pagar()">Pagar</button>
+      </div>
+    </div>
+  </div>
+</div>

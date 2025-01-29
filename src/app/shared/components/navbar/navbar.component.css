@@ -1,0 +1,36 @@
+/* Navbar general */
+header.navbar {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  /* Logo del navbar */
+  .navbar-logo {
+    height: 45px; /* Aumentado ligeramente */
+    border-radius: 8px;
+  }
+  
+  /* Botón púrpura */
+  .btn-purple {
+    background-color: #6f42c1;
+    color: #fff;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-purple:hover {
+    background-color: #5a379f;
+  }
+  
+  /* Ajustes de responsividad */
+  @media (max-width: 768px) {
+    .navbar-logo {
+      height: 35px; /* Ajuste proporcional para pantallas pequeñas */
+    }
+  
+    .btn-purple {
+      font-size: 16px;
+      padding: 0.5rem 0.8rem;
+    }
+  }
+  

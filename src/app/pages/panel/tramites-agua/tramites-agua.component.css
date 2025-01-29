@@ -1,0 +1,16 @@
+.uniform-height {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Garantiza que la altura de las tarjetas sea uniforme */
+  }
+  
+  .tab-content {
+    display: flex;
+    flex-wrap: wrap; /* Asegura que el contenido se ajuste */
+  }
+  
+  .card {
+    min-height: 200px; /* Opcional: Ajusta el tamaño base */
+  }
+  

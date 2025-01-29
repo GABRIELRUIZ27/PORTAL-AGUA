@@ -1,0 +1,60 @@
+/* Fondo morado claro para las tarjetas */
+.bg-purple-lt {
+    background-color: #f3e8fc;
+  }
+  
+  /* Texto morado oscuro */
+  .text-purple {
+    color: #6f42c1;
+  }
+  
+  /* Botón púrpura */
+  .btn-purple {
+    background-color: #6f42c1;
+    color: #fff;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-purple:hover {
+    background-color: #5a379f;
+  }
+  
+  /* Estilo de la cinta */
+  .ribbon {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 36px;
+    height: 36px;
+    background-color: #ffc107; /* Amarillo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Íconos en la cinta */
+  .ribbon i {
+    font-size: 20px;
+  }
+  
+  /* Transición al pasar el mouse sobre las tarjetas */
+  .card {
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Carrusel */
+  /* .carousel-inner img {
+    border-radius: 12px;
+  } */
+  

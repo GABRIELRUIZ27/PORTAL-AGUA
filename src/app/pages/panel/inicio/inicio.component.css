@@ -1,0 +1,70 @@
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.fs-2 {
+  font-size: 50rem;
+}
+
+.fs-4 {
+  font-size: 4rem;
+}
+
+.fs-5 {
+  font-size: 3rem;
+}
+
+.lateral-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card h1,
+.card h3 {
+  color: #0056b3; /* Azul corporativo */
+}
+
+.card p {
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.btn-primary {
+  background-color: #0056b3;
+  border-color: #004494;
+}
+
+.btn-primary:hover {
+  background-color: #004494;
+  border-color: #003366;
+}
+
+.recargos-section {
+  background-color: #fff3cd; /* Fondo de color amarillo claro */
+  border: 1px solid #ffeeba; /* Borde con un color similar al fondo */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.recargos-section label {
+  font-weight: bold;
+  color: #856404; /* Color de texto amarillo oscuro */
+}
+
+.recargos-section input {
+  background-color: #fff3cd; /* Fondo amarillo claro */
+  color: #856404; /* Texto en color oscuro */
+  font-weight: bold; /* Texto en negrita */
+}

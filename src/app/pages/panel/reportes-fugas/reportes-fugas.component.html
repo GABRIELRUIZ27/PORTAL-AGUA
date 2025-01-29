@@ -1,0 +1,253 @@
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.41)"
+  size="large"
+  color="#ffffff"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p style="color: white">Guardando...</p>
+</ngx-spinner>
+
+
+<div class="row">
+    <!-- Card: Fugas Atendidas -->
+    <div class="col-12 mb-4">
+      <div class="card text-white" style="background-color: #3c1d63; border-radius: 1.5rem; padding: 1.5rem; position: relative;">
+        <div class="card-body d-flex align-items-center">
+          <!-- Ícono al lado izquierdo -->
+          <div class="me-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="64" height="64" stroke-width="2" style="color: #00bcd4;">
+              <path d="M18.967 13.594a6.568 6.568 0 0 0 -.903 -2.717l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546a7.125 7.125 0 0 0 4.04 1.565"></path>
+              <path d="M15 19l2 2l4 -4"></path>
+            </svg>
+          </div>
+          <!-- Texto -->
+          <div class="text-center w-100">
+            <h3 class="card-title fw-bold mb-3" style="font-size: 1.8rem; text-transform: uppercase;">Fugas Atendidas</h3>
+            <h1 class="display-1 fw-bold mb-0">{{ totalReportes }}</h1>
+            <p class="mt-2" style="font-size: 1.2rem; font-style: italic; opacity: 0.85;">Reporte actualizado en tiempo real</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Card: Reportar Fuga -->
+    <div class="col-12">
+      <div class="card text-white" style="background-color: #8b0d73; border-radius: 1.5rem; padding: 1.5rem; position: relative;">
+        <div class="card-body d-flex align-items-center">
+          <!-- Texto -->
+          <div class="text-center w-100">
+            <h3 class="card-title fw-bold mb-3" style="font-size: 1.8rem; text-transform: uppercase;">Reportar Fuga de Agua</h3>
+            <p style="font-size: 1.2rem; font-style: italic; opacity: 0.85;">Ayúdanos a resolver fugas rápidamente reportándolas aquí</p>
+            <button
+              class="btn btn-warning"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-propaganda"
+              style="background-color: #ffca28; color: #3c1d63; border: none; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; padding: 0.75rem 1.5rem; border-radius: 1rem;"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#3c1d63" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 5v14m-7 -7h14" />
+              </svg>
+              Agregar Reporte
+            </button>
+          </div>
+          <!-- Ícono al lado derecho -->
+          <div class="ms-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="64" height="64" stroke-width="2" style="color: #ff5252;">
+              <path d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"></path>
+              <path d="M5 21v-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+<div
+  class="modal"
+  id="modal-propaganda"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Enviar reporte de fuga
+        </h5>
+        <button
+          #closebutton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="resetMap(); resetForm()"
+        ></button>
+      </div>
+
+      <form [formGroup]="reporteForm">
+        <div class="modal-body">
+          <div class="row d-flex align-items-center align-items-end">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label class="form-label">Comunidad*:</label>
+                <ng-select
+                  formControlName="comunidad"
+                  #selectComunidad
+                  [searchable]="false"
+                  [items]="comunidades"
+                  bindLabel="nombre"
+                  bindValue="id"
+                  placeholder="Elegir comunidad"
+                  [clearable]="false"
+                >
+                  <ng-template ng-header-tmp>
+                    <input
+                      class="form-control"
+                      type="text"
+                      (input)="
+                        selectComunidad.filter($any($event.target).value)
+                      "
+                    />
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-index="index">
+                    {{ item.nombre }}
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label">Nombre:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="nombre"
+                  />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label class="form-label">Teléfono:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="telefono"
+                      />
+                      </div>
+                </div>
+            </div>
+
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <div class="form-label">Selecciona una fotografía*</div>
+              <div class="row flex-column">
+                <input
+                  class="input"
+                  type="file"
+                  formControlName="imagenBase64"
+                  (change)="onFileChange($event)"
+                />
+                <div *ngIf="isUpdatingImg" class="img-preview my-1">
+                  <img
+                    [src]="imgPreview"
+                    alt="Image preview"
+                    class="img-fluid"
+                    width="50%"
+                    height="50%"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <img
+                class="img"
+                *ngIf="reporteForm.get('imagenBase64')?.value"
+                [src]="
+                  'data:image/jpeg;base64,' +
+                  reporteForm.get('imagenBase64')?.value
+                "
+                width="50%"
+                height="50%"
+                alt="Vista previa de la imagen"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-10 mt-1 mb-3">
+              <label class="form-label">Dirección*:</label>
+              <input
+                #ubicacionInput
+                class="form-control"
+                type="text"
+                ngx-gp-autocomplete
+                formControlName="direccion"
+                (onAddressChange)="selectAddress($event)"
+              />
+              <div
+                *ngIf="reporteForm.get('direccion')?.touched"
+                class="error-message"
+              >
+                <div
+                  *ngIf="reporteForm.get('direccion')?.hasError('required')"
+                >
+                  La direccion es requerida
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-2 d-flex align-items-end justify-content-end mt-1 mb-3"
+            >
+              <button
+                type="button"
+                title="Obtener ubicación"
+                class="btn btn-info float-end"
+                (click)="getCurrentLocation()"
+              >
+                <i class="ti ti-map-pin"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <div
+                  class="card w-100 altura-mapa"
+                  style="width: 100%; height: 50vh"
+                  #mapCanvas
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+        <p
+          class="form-label"
+          style="margin-left: 20px; color: red; font-weight: bold"
+        >
+          Todos los campos marcados con * son requeridos
+        </p>
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!reporteForm.valid"
+            (click)="agregar()"
+          >
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

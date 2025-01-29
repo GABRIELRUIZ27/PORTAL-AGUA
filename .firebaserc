@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "portal-ciudadano-9992d",
+    "jpr": "simpatizantes-c3705",
+    "portal": "portal-ciudadano-9992d"
+  },
+  "targets": {},
+  "etags": {}
+}
