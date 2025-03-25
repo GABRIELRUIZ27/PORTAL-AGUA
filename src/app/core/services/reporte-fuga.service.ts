@@ -33,7 +33,7 @@ export class ReporteAguaService {
   }
 
   getTotalReportes(): Observable<number> {
-    return this.http.get<number>(`${this.route}/total`);
+    return this.http.get<number>(`${this.route}/total-atendidos`);
   }
 
 }

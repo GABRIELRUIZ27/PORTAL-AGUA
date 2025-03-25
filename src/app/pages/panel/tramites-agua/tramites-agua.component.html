@@ -31,10 +31,10 @@
             
             <!-- Content of card #1 -->
             <div id="tab-top-1" class="card tab-pane" [ngClass]="{'active': activeTab === 1}" role="tabpanel" style="background-color: #3c1d63;">
-              <div class="card-body d-flex align-items-center uniform-height" style="color: white;">
-                <!-- Ícono alineado a la izquierda del texto -->
-                <div class="d-flex align-items-center">
-                  <div class="me-3">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <!-- Columna del ícono -->
+                  <div class="col-md-4 d-flex justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" 
                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -46,22 +46,24 @@
                       <path d="M18.42 12.61a2.1 2.1 0 0 1 2.97 2.97l-6.39 6.42h-3v-3z" />
                     </svg>
                   </div>
-                  <!-- Texto a la derecha del ícono -->
-                  <div>
+            
+                  <!-- Columna del texto -->
+                  <div class="col-md-8 text-center text-md-start">
                     <div class="card-title text-white">Contrato de Agua</div>
                     <p class="text-white mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
+                      Este trámite permite contratar el servicio de agua potable y drenaje para una propiedad.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            
+          
             <!-- Content of card #2 -->
             <div id="tab-top-2" class="card tab-pane" [ngClass]="{'active': activeTab === 2}" role="tabpanel" style="background-color: #3c1d63;">
-              <div class="card-body d-flex align-items-center uniform-height" style="color: white;">
-                <div class="d-flex align-items-center">
-                  <div class="me-3">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <!-- Columna del ícono -->
+                  <div class="col-md-4 d-flex justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" 
                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -70,21 +72,27 @@
                       <path d="M9 14l2 2l4 -4" />
                     </svg>
                   </div>
-                  <div>
+                  
+                  <!-- Columna del texto -->
+                  <div class="col-md-8 text-center text-md-start">
                     <div class="card-title text-white">Requisitos</div>
-                    <p class="text-white mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
+                    <p class="text-white mb-0">Para realizar este trámite, necesitas:</p>
+                    <ul class="text-white mb-0">
+                      <li>📄 Copia de escritura</li>
+                      <li>🪪 INE del titular</li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
+            
       
             <!-- Content of card #3 -->
             <div id="tab-top-3" class="card tab-pane" [ngClass]="{'active': activeTab === 3}" role="tabpanel" style="background-color: #3c1d63;">
-              <div class="card-body d-flex align-items-center uniform-height" style="color: white;">
-                <div class="d-flex align-items-center">
-                  <div class="me-3">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <!-- Columna del ícono -->
+                  <div class="col-md-4 d-flex justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" 
                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -93,15 +101,20 @@
                       <path d="M12 7v10" />
                     </svg>
                   </div>
-                  <div>
+            
+                  <!-- Columna del texto -->
+                  <div class="col-md-8 text-center text-md-start">
                     <div class="card-title text-white">Costos</div>
-                    <p class="text-white mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
+                    <p class="text-white mb-0">Los costos del servicio de agua potable incluyen:</p>
+                    <ul class="text-white mb-0">
+                      <li>💰 Costo de conexión: <strong>$13,011 MXN</strong></li>
+                      <li>📊 Tarifas variables según consumo</li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
+            
       
           </div>
         </div>
@@ -116,7 +129,7 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link" [ngClass]="{'active': activePago === 1}" (click)="setActivePagoTab(1)" 
                       [style.background-color]="activePago === 1 ? '#3c1d63' : '#8b0d73'" style="color: white;">
-                Pago de Agua
+                Cambio de titular
               </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -137,64 +150,71 @@
             
             <!-- Content of card #1 -->
             <div id="tab-top-1" class="card tab-pane" [ngClass]="{'active': activePago === 1}" role="tabpanel" style="background-color: #8b0d73;">
-              <div class="card-body d-flex align-items-center uniform-height" style="color: white;">
-                <!-- Ícono alineado a la izquierda del texto -->
-                <div class="d-flex align-items-center">
-                  <div class="me-3">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ffffff" style="width: 70px; height: 70px;"  stroke-width="1.75"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-droplet-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.668 10.29l-4.493 -6.673c-.421 -.625 -1.288 -.803 -1.937 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546a7.175 7.175 0 0 0 5.493 1.51" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg>
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <!-- Columna del ícono -->
+                  <div class="col-md-4 d-flex justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" 
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">
+                      <path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path> <path d="M3 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901"></path> <path d="M16 3.13a4 4 0 0 1 0 7.75"></path> <path d="M16 19h6"></path> <path d="M19 16v6"></path> </svg> 
                   </div>
-                  <!-- Texto a la derecha del ícono -->
-                  <div>
-                    <div class="card-title text-white">Pago de Agua</div>
+            
+                  <!-- Columna del texto -->
+                  <div class="col-md-8">
+                    <div class="card-title text-white">Cambio de Titular</div>
                     <p class="text-white mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
+                      Si necesitas transferir la titularidad del contrato de agua por compra-venta, herencia u otro motivo, realiza este trámite en nuestras oficinas.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
             
+                      
             <!-- Content of card #2 -->
             <div id="tab-top-2" class="card tab-pane" [ngClass]="{'active': activePago === 2}" role="tabpanel" style="background-color: #8b0d73;">
-              <div class="card-body d-flex align-items-center uniform-height" style="color: white;">
-                <div class="d-flex align-items-center">
-                  <div class="me-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" 
-                         stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                      <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-                      <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                      <path d="M9 14l2 2l4 -4" />
-                    </svg>
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <!-- Columna del ícono -->
+                  <div class="col-md-4 d-flex justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" style="width: 70px; height: 70px;" stroke-linecap="round" stroke-linejoin="round" width="50" height="50" stroke-width="2">
+                       <path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path> <path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path> <path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path> <path d="M11 6l9 0"></path> <path d="M11 12l9 0"></path> <path d="M11 18l9 0"></path> </svg> 
                   </div>
-                  <div>
+            
+                  <!-- Columna del texto -->
+                  <div class="col-md-8">
                     <div class="card-title text-white">Requisitos</div>
                     <p class="text-white mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
+                      Para realizar este trámite necesitas:
                     </p>
+                    <ul class="text-white">
+                      <li>📄 Copia de escritura</li>
+                      <li>🪪 INE del titular</li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
+            
       
             <!-- Content of card #3 -->
             <div id="tab-top-3" class="card tab-pane" [ngClass]="{'active': activePago === 3}" role="tabpanel" style="background-color: #8b0d73;">
-              <div class="card-body d-flex align-items-center uniform-height" style="color: white;">
-                <div class="d-flex align-items-center">
-                  <div class="me-3">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <!-- Columna del ícono -->
+                  <div class="col-md-4 d-flex justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" 
-                         stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                      <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
-                      <path d="M12 7v10" />
-                    </svg>
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler" style="width: 70px; height: 70px;">                      <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path> <path d="M3 6m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path> <path d="M18 12l.01 0"></path> <path d="M6 12l.01 0"></path> </svg> 
                   </div>
-                  <div>
+            
+                  <!-- Columna del texto -->
+                  <div class="col-md-8 text-center text-md-start">
                     <div class="card-title text-white">Costos</div>
-                    <p class="text-white mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
+                    <p class="text-white mb-0">Los costos del servicio de agua potable incluyen:</p>
+                    <ul class="text-white mb-0">
+                      <li>💰 Costo de conexión: <strong>$680 MXN</strong></li>
+                      <li>📊 Tarifas variables según consumo</li>
+                    </ul>
                   </div>
                 </div>
               </div>

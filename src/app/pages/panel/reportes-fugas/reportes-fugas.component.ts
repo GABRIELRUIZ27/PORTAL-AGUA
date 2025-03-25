@@ -48,7 +48,7 @@ export class ReportesFugasComponent implements OnInit {
     private reportesService: ReporteAguaService
   ) {
     this.getComunidad();
-    this.creteForm();
+    this.createForm();
   }
 
   ngOnInit(): void {
@@ -66,25 +66,27 @@ export class ReportesFugasComponent implements OnInit {
     });
   }
   
-  creteForm() {
+  createForm() {
+    const fechaActual = new Date();
+    const fechaFormateada = `${fechaActual.getFullYear()}-${(fechaActual.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${fechaActual.getDate().toString().padStart(2, '0')}`;
+  
     this.reporteForm = this.formBuilder.group({
       id: [null],
       nombre: [''],
       foto: [''],
       telefono: [''],
-      direccion: [
-        '',
-        [
-          Validators.required,
-        ],
-      ],
+      direccion: ['', [Validators.required]],
       imagenBase64: [''],
       latitud: [],
       longitud: [],
       comunidad: ['', Validators.required],
+      fecha: [fechaFormateada], // Solo la fecha 'YYYY-MM-DD'
+      atendida: [false], // Se establece en falso por defecto
     });
   }
-
+  
   getComunidad() {
     this.comunidadService
       .getAll()
