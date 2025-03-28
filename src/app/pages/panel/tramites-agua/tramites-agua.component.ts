@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class TramitesAguaComponent {
   activeTab = 1; 
   activePago = 1;
+  activeTramite =1;
 
   setActiveTab(tabIndex: number) {
     this.activeTab = tabIndex;
@@ -15,5 +16,9 @@ export class TramitesAguaComponent {
 
   setActivePagoTab(tabIndex: number) {
     this.activePago = tabIndex;
+  }
+
+  setActiveTramite(tabIndex: number) {
+    this.activeTramite = tabIndex;
   }
 }
