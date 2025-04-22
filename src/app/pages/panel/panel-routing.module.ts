@@ -11,6 +11,11 @@ const routes: Routes = [
       },
       {
         path: 'inicio',
+        loadChildren: () => import('./portal/portal.module')
+          .then(i => i.PortalModule)
+      },
+      {
+        path: 'agua-potable',
         loadChildren: () => import('./agua-inicio/agua-inicio.module')
           .then(i => i.AguaInicioModule)
       },
@@ -33,6 +38,11 @@ const routes: Routes = [
         path: 'pago-exitoso',
         loadChildren: () => import('./pago-exitoso/pago-exitoso.module')
           .then(i => i.PagoExitosoModule)
+      },
+      {
+        path: 'ecologia',
+        loadChildren: () => import('./ecologia/ecologia.module')
+          .then(i => i.EcologiaModule)
       },
     ]
   },
