@@ -26,7 +26,8 @@ export class InicioComponent {
   showErrorAlertContrato: boolean = false;
   showErrorAlertNombre: boolean = false;
   captchaResolved: boolean = false;
-
+  errorCorreo: string | null = null;
+  
   constructor(private aguaService: AguaService,
     private mensajeService: MensajeService,
   ) {}
@@ -102,9 +103,26 @@ buscarContratoPorNombre() {
     }
   }
 
+  onCorreoInput() {
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!this.correo) {
+      this.errorCorreo = null; // No error, solo el mensaje informativo
+    } else if (!correoRegex.test(this.correo)) {
+      this.errorCorreo = 'El correo electrónico ingresado no es válido. Asegúrate de escribirlo correctamente.';
+    } else {
+      this.errorCorreo = null; // Válido → sin mensajes
+    }
+  }
+
   // Validar periodo de pago y calcular costos
   onPeriodoInput() {
-    this.errorPeriodo = ''; // Limpiar cualquier error previo
+    this.errorPeriodo = ''; // Limpiar error
+  
+    if (!this.periodoPago) {
+      this.resetCostos();
+      return;
+    }
   
     const ultimoPeriodo = this.agua?.periodo || '';
     const inicioUltimo = this.getFechaInicio(ultimoPeriodo);
@@ -112,50 +130,44 @@ buscarContratoPorNombre() {
     const inicioNuevo = this.getFechaInicio(this.periodoPago);
     const finNuevo = this.getFechaFin(this.periodoPago);
   
-    // Verificar que las fechas sean válidas
     if (!inicioNuevo || !finNuevo || !finUltimo) {
       this.errorPeriodo = 'El período ingresado no es válido.';
       this.resetCostos();
       return;
     }
   
-    // Calcular el mes siguiente al último período
     const mesSiguiente = new Date(finUltimo);
-    mesSiguiente.setMonth(finUltimo.getMonth() + 1); // Avanzar un mes
+    mesSiguiente.setMonth(finUltimo.getMonth() + 1);
   
-    // Verificar si el primer mes del nuevo período es el mes siguiente al último período
-    if (inicioNuevo.getMonth() !== mesSiguiente.getMonth() || inicioNuevo.getFullYear() !== mesSiguiente.getFullYear()) {
-      this.errorPeriodo =
-        'El período ingresado no puede saltarse meses del último período.';
+    if (
+      inicioNuevo.getMonth() !== mesSiguiente.getMonth() ||
+      inicioNuevo.getFullYear() !== mesSiguiente.getFullYear()
+    ) {
+      this.errorPeriodo = 'El período ingresado no puede saltarse meses del último período.';
       this.resetCostos();
       return;
     }
   
-    // Calcular el número de meses entre el inicio y fin del nuevo período
     const meses = this.calcularMeses(inicioNuevo, finNuevo);
   
-    // Asignar los costos basados en los meses calculados
     const costoAgua = meses * 65;
     const costoAlcantarillado = meses * 15;
     const costoTotal = costoAgua + costoAlcantarillado;
   
-    // Asignamos los valores a las propiedades
     this.aguaCosto = `$${costoAgua}`;
     this.alcantarilladoCosto = `$${costoAlcantarillado}`;
   
-    // Calcular recargos solo si el período está antes de 2025
     const añoNuevoPeriodo = inicioNuevo.getFullYear();
     if (añoNuevoPeriodo < 2025) {
-      // Si el año es 2024 o antes, aplicar recargos del 10%
-      const recargos = costoTotal * 0.1; // 10% de recargo
+      const recargos = costoTotal * 0.1;
       this.recargos = `$${recargos.toFixed(2)}`;
       this.total = `$${(costoTotal + recargos).toFixed(2)}`;
     } else {
-      // Si el período es después de 2024, no aplicar recargos
       this.recargos = `$0.00`;
       this.total = `$${costoTotal.toFixed(2)}`;
     }
   }
+  
   
   // Métodos auxiliares para procesar fechas y calcular meses
   getFechaInicio(periodo: string): Date | null {
@@ -212,16 +224,36 @@ convertirMesAIndice(mes: string): number | null {
   }
 
   pagar() {
-    if (!this.periodoPago || this.errorPeriodo) {
-      alert('Por favor, corrige los errores antes de proceder con el pago.');
+    if (!this.periodoPago || this.errorPeriodo || !this.correo) {
+      alert('Por favor, completa el correo y corrige errores antes de pagar.');
       return;
     }
-
-    alert(`Pago realizado con éxito para el período ${this.periodoPago}.
-            Total: ${this.total}`);
-    this.resetModal();
+  
+    const totalSinSimbolo = this.total.replace('$', '').replace(',', '').trim();
+    const totalEnPesos = parseFloat(totalSinSimbolo);
+  
+    const payload = {
+      nombre: this.agua?.nombre || 'Usuario',
+      correo: this.correo,
+      totalEnPesos
+    };
+  
+    this.aguaService.pagarConConekta(payload).subscribe({
+      next: (response) => {
+        if (response?.url) {
+          window.location.href = response.url; // Redirige al link de pago de Conekta
+        } else {
+          alert('No se pudo generar el link de pago correctamente.');
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al generar el link de pago. Intenta más tarde.');
+      }
+    });
   }
-
+  
+  
   realizarNuevaConsulta() {
     this.agua = null;
     this.numeroContrato = null;

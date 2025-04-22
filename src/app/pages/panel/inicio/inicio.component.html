@@ -261,30 +261,6 @@
             </tbody>
           </table>
       
-          <!-- Alerta de advertencia para revisar los datos -->
-          <div class="alert alert-warning alert-dismissible fade show" role="alert" style="border-radius: 10px; background-color: #fff3cd; border: 1px solid #ffeeba;">
-            <div class="d-flex align-items-center">
-              <!-- Ícono de advertencia -->
-              <div class="me-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon" style="color: #ffc107;">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M12 9v4"></path>
-                  <path d="M12 16h.01"></path>
-                  <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
-                </svg>
-              </div>
-              
-              <!-- Mensaje de alerta -->
-              <div>
-                <h3 class="alert-title text-warning fw-bold" style="margin-bottom: 0;">¡Atención!</h3>
-                <p class="text-secondary" style="margin-top: 0;">Por favor, revisa los datos de tu contrato antes de continuar con el pago.</p>
-              </div>
-            </div>
-            
-            <!-- Botón para cerrar la alerta -->
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-      
           <!-- Botones de acción -->
           <div class="d-flex flex-column align-items-center gap-3">
             <!-- reCAPTCHA -->
@@ -368,8 +344,9 @@
             (input)="onPeriodoInput()"
             placeholder="Ejemplo: Enero 2025 - Diciembre 2025"
           />
-          <!-- Advertencia de formato de periodo -->
-          <div class="alert alert-info mt-2" role="alert" *ngIf="!errorPeriodo">
+        
+          <!-- Mensaje informativo si está vacío -->
+          <div class="alert alert-info mt-2" role="alert" *ngIf="!periodoPago">
             <div class="d-flex">
               <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon">
@@ -387,9 +364,9 @@
               </div>
             </div>
           </div>
-
-          <!-- Error de formato de periodo -->
-          <div *ngIf="errorPeriodo" class="alert alert-danger mt-2" role="alert">
+        
+          <!-- Mensaje de error si hay texto pero está mal -->
+          <div *ngIf="periodoPago && errorPeriodo" class="alert alert-danger mt-2" role="alert">
             <div class="d-flex align-items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon me-2">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -403,6 +380,7 @@
             </div>
           </div>
         </div>
+        
 
         <!-- Input de correo electrónico -->
         <div class="mb-3">
@@ -412,10 +390,46 @@
             type="email"
             class="form-control"
             [(ngModel)]="correo"
+            (input)="onCorreoInput()"
             placeholder="usuario@correo.com"
           />
-        </div>
-
+        
+          <!-- Mensaje informativo si el campo está vacío -->
+          <div class="alert alert-info mt-2" role="alert" *ngIf="!correo">
+            <div class="d-flex">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                  <path d="M12 9h.01"></path>
+                  <path d="M11 12h1v4h1"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="alert-title">Importancia del Correo</h4>
+                <div class="text-secondary">
+                  Por favor, proporciona un correo válido. Toda la información relacionada con el pago será enviada a esta dirección.
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Mensaje de error si el correo es inválido -->
+          <div *ngIf="correo && errorCorreo" class="alert alert-danger mt-2" role="alert">
+            <div class="d-flex align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon me-2">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                <path d="M12 8v4"></path>
+                <path d="M12 16h.01"></path>
+              </svg>
+              <div>
+                {{ errorCorreo }}
+              </div>
+            </div>
+          </div>
+        </div>     
+        
         <!-- Inputs de costos -->
         <div class="mb-3">
           <label for="aguaCosto" class="form-label">Costo de Agua:</label>
@@ -442,7 +456,35 @@
           <label for="total" class="form-label">Total:</label>
           <input id="total" class="form-control" [value]="total" disabled />
         </div>
-      </div>
+                <!-- Alerta de advertencia para revisar los datos -->
+                <div class="mb-3">
+                  <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert"
+                       style="border-radius: 10px; background-color: #fff3cd; border: 1px solid #ffeeba; padding: 0.75rem 1rem;">
+                    <div class="d-flex align-items-center">
+                      <!-- Ícono -->
+                      <div class="me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="icon alert-icon" style="color: #ffc107;">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M12 9v4"></path>
+                          <path d="M12 16h.01"></path>
+                          <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
+                        </svg>
+                      </div>
+                
+                      <!-- Texto -->
+                      <div class="flex-grow-1">
+                        <h3 class="alert-title text-warning fw-bold mb-1">¡Atención!</h3>
+                        <p class="text-secondary mb-0">Por favor, revisa los datos de tu contrato antes de continuar con el pago.</p>
+                      </div>
+                
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetModal()">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="pagar()">Pagar</button>

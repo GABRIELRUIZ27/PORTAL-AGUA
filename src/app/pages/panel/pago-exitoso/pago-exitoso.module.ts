@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { InicioRoutingModule } from './inicio-routing.module';
-import { InicioComponent } from './inicio.component';
+import { PagoExitosoRoutingModule } from './pago-exitoso-routing.module';
+import { PagoExitosoComponent } from './pago-exitoso.component';
 import { FormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
-    InicioComponent
+    PagoExitosoComponent
   ],
   imports: [
     CommonModule,
-    InicioRoutingModule,
+    PagoExitosoRoutingModule,
     FormsModule,
     RecaptchaModule,
     
   ]
 })
-export class InicioModule { }
+export class PagoExitosoModule { }

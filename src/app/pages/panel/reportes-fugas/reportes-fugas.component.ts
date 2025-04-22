@@ -9,6 +9,7 @@ import { LoadingStates } from 'src/app/global/global';
 import { Reporte } from 'src/app/models/reporte';
 import * as XLSX from 'xlsx';
 import { Comunidad } from 'src/app/models/comunidad';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-reportes-fugas',
@@ -72,19 +73,40 @@ export class ReportesFugasComponent implements OnInit {
       .toString()
       .padStart(2, '0')}-${fechaActual.getDate().toString().padStart(2, '0')}`;
   
-    this.reporteForm = this.formBuilder.group({
-      id: [null],
-      nombre: [''],
-      foto: [''],
-      telefono: [''],
-      direccion: ['', [Validators.required]],
-      imagenBase64: [''],
-      latitud: [],
-      longitud: [],
-      comunidad: ['', Validators.required],
-      fecha: [fechaFormateada], // Solo la fecha 'YYYY-MM-DD'
-      atendida: [false], // Se establece en falso por defecto
-    });
+      this.reporteForm = this.formBuilder.group({
+        id: [null],
+        nombre: ['', [this.noPalabrasOfensivasValidator()]],
+        foto: [''],
+        telefono: ['', [Validators.pattern(/^\d{10}$/)]],
+        direccion: ['', [Validators.required]],
+        imagenBase64: [''],
+        latitud: [],
+        longitud: [],
+        comunidad: ['', Validators.required],
+        fecha: [fechaFormateada],
+        atendida: [false],
+        acceptPrivacy: [false, Validators.requiredTrue],
+      });
+  }
+
+  noPalabrasOfensivasValidator(): ValidatorFn {
+    const palabrasProhibidas = [
+      'idiota', 'tonto', 'estúpido', 'imbécil',
+      'maldito', 'cabron', 'mierda', 'puta', 'puto','cabrón',
+      'pendejo', 'jodido', 'gilipollas', 'carajo', 'estupido'
+    ];
+  
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const valor = control.value?.toLowerCase();
+      if (valor) {
+        for (let palabra of palabrasProhibidas) {
+          if (valor.includes(palabra)) {
+            return { palabraOfensiva: true };
+          }
+        }
+      }
+      return null;
+    };
   }
   
   getComunidad() {

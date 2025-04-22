@@ -30,5 +30,15 @@ export class AguaService {
     const url = `${this.route}/buscar-por-nombre?nombre=${encodeURIComponent(nombre)}`;
     return this.http.get<any>(url);
   }
-    
+
+  pagarConConekta(payload: { nombre: string; correo: string; totalEnPesos: number }) {
+    return this.http.post<{ url: string }>(`${environment.apiUrl}/link-pago`, null, {
+      params: {
+        nombre: payload.nombre,
+        correo: payload.correo,
+        totalEnPesos: payload.totalEnPesos
+      }
+    });
+  }
+  
 }

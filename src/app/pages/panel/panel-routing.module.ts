@@ -29,6 +29,11 @@ const routes: Routes = [
         loadChildren: () => import('./tramites-agua/tramites-agua.module')
           .then(i => i.TramitesAguaModule)
       },
+      {
+        path: 'pago-exitoso',
+        loadChildren: () => import('./pago-exitoso/pago-exitoso.module')
+          .then(i => i.PagoExitosoModule)
+      },
     ]
   },
 ];
